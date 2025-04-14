@@ -19,13 +19,13 @@ char	*ft_substr(char const *str, unsigned int start, size_t len)
 	char	*temp;
 
 	j = 0;
-	if (str[j])
+	if (str[j] == '\0')
 		return (NULL);
 	i = (size_t)ft_strlen(str);
-	if (start + len > i)
+	if (len == 0 || start > i)
 		return (NULL);
-	temp = malloc(sizeof(char) + (len - 1));
-	while (str[j + start] != '\0' || j < len - 1)
+	temp = malloc(sizeof(char) + (len + 1));
+	while (str[j + start] != '\0' && j < len)
 	{
 		temp[j] = str[start + j];
 		j++;
@@ -38,5 +38,5 @@ int		main(void)
 {
 	char src[] = "Hello World!!!";
 	
-	printf ("Essa é a string completa '%s' e vai imprimir da posicao '%i'. Ai fica isso '%s'.\n", src, 5, ft_substr(src, 5, 3));
+	printf ("Essa é a string completa '%s' e vai imprimir da posicao '%i'. Ai fica isso '%s'.\n", src, 5, ft_substr(src, 16, 15));
 }
