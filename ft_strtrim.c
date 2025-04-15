@@ -14,6 +14,7 @@
 
 char	*ft_strtrim(char const *s1, char const *set)
 {
+	size_t	cont;
 	size_t	len_i;
 	size_t	len_f;
 	char	*rest;
@@ -22,23 +23,20 @@ char	*ft_strtrim(char const *s1, char const *set)
 		return (NULL);
 	len_i = 0;
 	len_f = ft_strlen(s1);
-	while (s1[len_i++] == set[0])
-	{
-		if (s1[len_i] != set[0])
-			break;
-	}
+	while (s1[len_i] == set[0])
+		len_i++;
 	while (s1[len_f] == set[0])
 		len_f--;
 	rest = malloc(sizeof(char) * (len_f - len_i + 1));
 	if (!rest)
 		return (NULL);
-	len_f = 0;
-	while (s1[len_i + len_f] != set[0])
+	cont = 0;
+	while ((len_i + cont) < len_f)
 	{
-		rest[len_f] = s1[len_i + len_f];
-		len_f++;
+		rest[cont] = s1[len_i + cont];
+		cont++;
 	}
-	rest[len_f] = '\0';
+	rest[cont] = '\0';
 	return (rest);
 }
 
