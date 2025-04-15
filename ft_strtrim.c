@@ -19,10 +19,10 @@ char	*ft_strtrim(char const *s1, char const *set)
 	size_t	len_f;
 	char	*rest;
 
-	if (!s1)
+	if (!s1 || !set)
 		return (NULL);
 	len_i = 0;
-	len_f = ft_strlen(s1);
+	len_f = ft_strlen(s1) - 1;
 	while (s1[len_i] == set[0])
 		len_i++;
 	while (s1[len_f] == set[0])
@@ -39,7 +39,6 @@ char	*ft_strtrim(char const *s1, char const *set)
 	rest[cont] = '\0';
 	return (rest);
 }
-
 int		main(void)
 {
 	char str[] = "......Tenta d.e novo ai    ........";
