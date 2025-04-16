@@ -17,7 +17,6 @@ static int	ft_count_words(const char *str, char c)
 	int		palavra;
 
 	palavra = 0;
-
 	while (*str)
 	{
 		if (*str == c)
@@ -59,6 +58,12 @@ static char		*ft_copy_word(const char *str, size_t n)
 	word[i] = '\0';
 	return (word);
 }
+static void	ft_free(char **result, int i)
+{
+	while (i > 0)
+		free(result[--i]);
+	free(result);
+}
 
 char **ft_split(char const *str, char c)
 {
@@ -75,14 +80,15 @@ char **ft_split(char const *str, char c)
 		return (NULL);
 	while (*str && *str == c)
 		str++;
-	while (cw)
+	while (cw--)
 	{
 		result[i] = ft_copy_word(str, ft_word_len(str, c));
+		if(!result[i])
+			return (ft_free(result, i), NULL);
 		str += ft_word_len(str, c);
 		while (*str && *str == c)
 			str++;
 		i++;
-		cw--;
 	}
 	result[i] = NULL;
 	return (result);
@@ -100,4 +106,4 @@ char **ft_split(char const *str, char c)
 //		arr++;
 //	}
 //	return (0);
-//
+//}
