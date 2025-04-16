@@ -12,61 +12,92 @@
 
 #include "libft.h"
 
-int		ft_count_words(char const *s, char c)
+static int	ft_count_words(const char *str, char c)
 {
-	int		i;
 	int		palavra;
 
-	i = 0;
 	palavra = 0;
-	while (s[i] != '\0')
+
+	while (*str)
 	{
-		if (s[i] == c)
-			i++;
-		else if (s[i] != c)
+		if (*str == c)
+			str++;
+		else
 		{
-			while (s[i] != c && s[i] != '\0')
-				i++;
+			while (*str != c && *str != '\0')
+				str++;
 			palavra++;
 		}
 	}
 	return (palavra);
 }
 
-size_t	ft_worl_len (const char *s, char c)
+static size_t	ft_word_len(const char *str, char c)
 {
-	size_t	i;
+	size_t		len;
 
-	i = 0;
-	while (s[i] != '\0' && s[i] != c)
-		i++;
-	return (i);
+	len = 0;
+	while (str[len] && str[len] != c)
+		len++;
+	return (len);
 }
 
-char **ft_split(char const *s, char c)
+static char		*ft_copy_word(const char *str, size_t n)
 {
-	char	**result;
-	int		i;
-	int		len;
+	size_t		i;
+	char	*word;
 
 	i = 0;
-	if(!s)
-		return (NULL);
-	result = malloc(sizeof(char) * ft_count_words (s, c) + 1);
-	while (s[len])
+	word = (char *)malloc(sizeof(char) * (n + 1));
+	if (!word)
+		return(NULL);
+	while (i < n)
 	{
-		while (i < (ft_count_words(s, c) + 1))
-		{
-			
-		}	
+		word[i] = str[i];
+		i++;
 	}
-	result[i] = '\0';
-	return(result);
+	word[i] = '\0';
+	return (word);
 }
 
-int		main(void)
+char **ft_split(char const *str, char c)
 {
-	char comp[] = "......Eu.ODEIO.o.SPLIT.";
+	char **result;
+	int		cw;
+	int		i;
 	
-	printf("%i\n", ft_count_words(comp, '.'));
+	if (!str)
+		return(NULL);
+	i = 0;
+	cw = ft_count_words(str, c);
+	result = malloc(sizeof(char *) * (cw + 1));
+	if (!result)
+		return (NULL);
+	while (*str && *str == c)
+		str++;
+	while (cw)
+	{
+		result[i] = ft_copy_word(str, ft_word_len(str, c));
+		str += ft_word_len(str, c);
+		while (*str && *str == c)
+			str++;
+		i++;
+		cw--;
+	}
+	result[i] = NULL;
+	return (result);
 }
+
+//int		main(void)
+//{
+//	char comp[] = "...Eu.ODEIO.você.SPLIT.";
+//	char **arr;
+//
+//	arr = ft_split(comp, '.');
+//	while (*arr)
+//	{
+//		printf("A : %s.\n", *arr);
+//		arr++;
+//	}
+//	return (0);
+//
