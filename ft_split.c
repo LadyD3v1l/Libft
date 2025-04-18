@@ -41,15 +41,15 @@ static size_t	ft_word_len(const char *str, char c)
 	return (len);
 }
 
-static char		*ft_copy_word(const char *str, size_t n)
+static char	*ft_copy_word(const char *str, size_t n)
 {
 	size_t		i;
-	char	*word;
+	char		*word;
 
 	i = 0;
 	word = (char *)malloc(sizeof(char) * (n + 1));
 	if (!word)
-		return(NULL);
+		return (NULL);
 	while (i < n)
 	{
 		word[i] = str[i];
@@ -58,6 +58,7 @@ static char		*ft_copy_word(const char *str, size_t n)
 	word[i] = '\0';
 	return (word);
 }
+
 static void	ft_free(char **result, int i)
 {
 	while (i > 0)
@@ -65,14 +66,14 @@ static void	ft_free(char **result, int i)
 	free(result);
 }
 
-char **ft_split(char const *str, char c)
+char	**ft_split(char const *str, char c)
 {
-	char **result;
+	char	**result;
 	int		cw;
 	int		i;
-	
+
 	if (!str)
-		return(NULL);
+		return (NULL);
 	i = 0;
 	cw = ft_count_words(str, c);
 	result = malloc(sizeof(char *) * (cw + 1));
@@ -83,7 +84,7 @@ char **ft_split(char const *str, char c)
 	while (cw--)
 	{
 		result[i] = ft_copy_word(str, ft_word_len(str, c));
-		if(!result[i])
+		if (!result[i])
 			return (ft_free(result, i), NULL);
 		str += ft_word_len(str, c);
 		while (*str && *str == c)
